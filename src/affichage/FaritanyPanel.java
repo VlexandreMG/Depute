@@ -4,24 +4,17 @@ import fonction.FiltrageComposant;
 import politicien.Resultat;
 
 import javax.swing.*;
-import java.awt.*;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import java.util.Vector;
 
-public class FaritanyPanel extends JPanel {
+public class FaritanyPanel extends JComboBox<String> {
     FiltrageComposant filtrageComposant = new FiltrageComposant();
-    JComboBox<String> comboFaritany = new JComboBox<>();
     Vector<Resultat> donnees;
 
     public FaritanyPanel(Vector<Resultat> donnees) {
-
-        setLayout(new FlowLayout(FlowLayout.CENTER));
-        JLabel jlabel = new JLabel("Faritany");
-        add(jlabel);
-
+        this.donnees = donnees;
+        setRenderer(new BasicComboBoxRenderer());
         remplirComboFaritany();
-        getFaritanyselectionnee();
-        getComboFaritany();
-
     }
 
     private void remplirComboFaritany() {
@@ -35,16 +28,11 @@ public class FaritanyPanel extends JPanel {
                 }
         }
 
-        comboFaritany.setModel(new DefaultComboBoxModel<>(faritanyUnique));
+        setModel(new DefaultComboBoxModel<>(faritanyUnique));
     }
 
-    public String getFaritanyselectionnee() {
-        return (String) comboFaritany.getSelectedItem();
+    public String getFaritanySelectionnee() {
+        return (String) getSelectedItem();
     }
-
-    public JComboBox<String> getComboFaritany() {
-        return comboFaritany;
-    }
-
 
 }

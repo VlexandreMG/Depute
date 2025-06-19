@@ -1,7 +1,5 @@
 Antananarivo--Analamanga--TanaIV--BV103--C1--210
-
-Antsiranana--Diana--Antsiranana I--BV201--C3--90
-
-Fianarantsoa--Haute Matsiatra--Fianarantsoa I--BV301--C4--150
-
-Toamasina--Atsinanana--Toamasina I--BV401--C5--120
+Antananarivo--Analamanga--TanaIV--BV105--C2--240
+Antananarivo--Analamanga--TanaIV--BV104--C3--260
+Antsiranana--Diana--Antsiranana I--BV201--C4--70
+Antsiranana--Diana--Antsiranana I--BV202--C5--45

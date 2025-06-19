@@ -14,11 +14,9 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        FaritanyPanel faritanyPanel = new FaritanyPanel(donnees);
-        add(faritanyPanel);
-
+        MasterPanel masterPanel = new MasterPanel(donnees);
+        add(masterPanel);
         setVisible(true);
-
 
     }
 }
