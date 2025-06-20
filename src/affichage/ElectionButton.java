@@ -3,17 +3,11 @@ package affichage;
 import fonction.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class ElectionButton extends JButton {
-     MasterPanel masterPanel;
-     FaritanyPanel faritanyPanel;
-     RegionPanel regionPanel;
-     DistrictPanel districtPanel;
-     BureauVotePanel bureauVotePanel;
-     SpitString spitString = new SpitString();
+    private final MasterPanel masterPanel;
+    private final SpitString spitString = new SpitString();
 
     public ElectionButton(MasterPanel masterPanel) {
         super("Trouver le(s) gagnant(s)");
@@ -23,31 +17,23 @@ public class ElectionButton extends JButton {
     }
 
     private void setupListener() {
-        this.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    // Récupère les sélections des ComboBox
-                    String faritany = faritanyPanel.getFaritanySelectionnee();
-                    String region = regionPanel.getRegionSelectionnee();
-                    String district = districtPanel.getDistrictSelectionne();
-                    String bureau = bureauVotePanel.getBureauSelectionne();
+        this.addActionListener(e -> {
+            try {
+                // Récupère les sélections via MasterPanel
+                String faritany = masterPanel.getFaritanySelectionnee();
+                String region = masterPanel.getRegionSelectionnee();
+                String district = masterPanel.getDistrictSelectionne();
+                String bureau = masterPanel.getBureauSelectionne();
 
-                    // Appel à gagnant() avec les sélections
-                    String[][] resultats = spitString.gagnant(faritany, region, district, bureau);
+                String[][] resultats = spitString.gagnant(faritany, region, district, bureau);
+                String[][] elusParDistrict = spitString.trouverElusParDistrict(resultats);
+                afficherResultats(elusParDistrict);
 
-                    // Trouve les élus par district
-                    String[][] elusParDistrict = spitString.trouverElusParDistrict(resultats);
-
-                    // Affiche les résultats (à adapter selon votre besoin)
-                    afficherResultats(elusParDistrict);
-
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(masterPanel,
-                            "Erreur de lecture des données",
-                            "Erreur",
-                            JOptionPane.ERROR_MESSAGE);
-                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(masterPanel,
+                        "Erreur de lecture des données",
+                        "Erreur",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
     }
@@ -65,6 +51,4 @@ public class ElectionButton extends JButton {
                 "Résultats des élections",
                 JOptionPane.INFORMATION_MESSAGE);
     }
-
-
 }

@@ -1,12 +1,9 @@
 package affichage;
 
 import fonction.FiltrageComposant;
-import geographie.BureauVote;
 import politicien.Resultat;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Vector;
 
 public class MasterPanel extends JPanel {
@@ -107,5 +104,21 @@ public class MasterPanel extends JPanel {
                 bureauPanel.setModel(new DefaultComboBoxModel<>(bureau));
             }
         });
+    }
+
+    public String getFaritanySelectionnee() {
+        return faritanyPanel.getFaritanySelectionnee();
+    }
+
+    public String getRegionSelectionnee() {
+        return regionPanel.getRegionSelectionnee();
+    }
+
+    public String getDistrictSelectionne() {
+        return districtPanel.getDistrictSelectionne();
+    }
+
+    public String getBureauSelectionne() {
+        return bureauPanel.getBureauSelectionne();
     }
 }
