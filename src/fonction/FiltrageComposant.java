@@ -62,24 +62,4 @@ public class FiltrageComposant {
         return vector;
     }
 
-    public Vector<String> trouverCandidatsGagnants(Vector<Resultat> resultatsFiltres) {
-        Vector<String> gagnants = new Vector<>();
-        int maxVotes = 0;
-
-        // 1. Trouver le nombre maximal de votes
-        for (Resultat r : resultatsFiltres) {
-            if (r.getNbVote() > maxVotes) {
-                maxVotes = r.getNbVote();
-            }
-        }
-
-        // 2. Collecter tous les candidats ayant ce score maximal
-        for (Resultat r : resultatsFiltres) {
-            if (r.getNbVote() == maxVotes && !gagnants.contains(r.getNomcandidat())) {
-                gagnants.add(r.getNomcandidat());
-            }
-        }
-
-        return gagnants;
-    }
 }

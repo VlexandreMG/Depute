@@ -1,16 +1,15 @@
 package affichage;
 
-import fonction.FiltrageComposant;
-import politicien.Resultat;
+import fonction.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
+import java.io.IOException;
 
 public class ElectionButton extends JButton {
      MasterPanel masterPanel;
-     FiltrageComposant filtre = new FiltrageComposant();
+     SpitString spitString = new SpitString();
 
     public ElectionButton(MasterPanel masterPanel) {
         super("Trouver le(s) gagnant(s)");
@@ -23,38 +22,45 @@ public class ElectionButton extends JButton {
         this.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Vector<Resultat> resultatsFiltres = filtrerResultats();
-                Vector<String> gagnants = filtre.trouverCandidatsGagnants(resultatsFiltres);
+                try {
+                    // Récupère les sélections des ComboBox
+                    String faritany = (String) masterPanel.getFaritanyCombo().getSelectedItem();
+                    String region = (String) masterPanel.getRegionCombo().getSelectedItem();
+                    String district = (String) masterPanel.getDistrictCombo().getSelectedItem();
+                    String bureau = (String) masterPanel.getBureauCombo().getSelectedItem();
 
-                if (gagnants.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Aucun résultat trouvé !", "Information", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(null,
-                            "Candidat(s) élu(s) : " + String.join(", ", gagnants),
-                            "Résultats",
-                            JOptionPane.INFORMATION_MESSAGE);
+                    // Appel à gagnant() avec les sélections
+                    String[][] resultats = spitString.gagnant(faritany, region, district, bureau);
+
+                    // Trouve les élus par district
+                    String[][] elusParDistrict = spitString.trouverElusParDistrict(resultats);
+
+                    // Affiche les résultats (à adapter selon votre besoin)
+                    afficherResultats(elusParDistrict);
+
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(masterPanel,
+                            "Erreur de lecture des données",
+                            "Erreur",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
     }
 
-    private Vector<Resultat> filtrerResultats() {
-        Vector<Resultat> resultats = masterPanel.getDonnees();
-
-        // Filtrage en cascade
-        if (masterPanel.getFaritanyCombo().getSelectedItem() != null) {
-            resultats = filtre.VectorFaritany(resultats);
+    private void afficherResultats(String[][] resultats) {
+        StringBuilder sb = new StringBuilder();
+        for (String[] ligne : resultats) {
+            sb.append("District: ").append(ligne[0])
+                    .append(" | Elu: ").append(ligne[1])
+                    .append(" | Voix: ").append(ligne[2])
+                    .append("\n");
         }
-        if (masterPanel.getRegionCombo().getSelectedItem() != null) {
-            resultats = filtre.VectorRegion(resultats);
-        }
-        if (masterPanel.getDistrictCombo().getSelectedItem() != null) {
-            resultats = filtre.VectorDistrict(resultats);
-        }
-        if (masterPanel.getBureauCombo().getSelectedItem() != null) {
-            resultats = filtre.VectorBureau(resultats);
-        }
-        return resultats;
+        JOptionPane.showMessageDialog(masterPanel,
+                sb.toString(),
+                "Résultats des élections",
+                JOptionPane.INFORMATION_MESSAGE);
     }
+
 
 }

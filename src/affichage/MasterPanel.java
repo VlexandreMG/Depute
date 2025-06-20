@@ -113,7 +113,6 @@ public class MasterPanel extends JPanel {
     }
 
     // Getters modifiés
-    public Vector<Resultat> getDonnees() { return donnees; }
     public JComboBox<String> getFaritanyCombo() { return faritanyPanel; }
     public JComboBox<String> getRegionCombo() { return regionPanel; }
     public JComboBox<String> getDistrictCombo() { return districtPanel; }

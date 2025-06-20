@@ -10,7 +10,7 @@ public class MainFrame extends JFrame {
 
     public MainFrame(Vector<Resultat> donnees) {
         setTitle("Election Depute");
-        setMinimumSize(new Dimension(1000,1000));
+        setMinimumSize(new Dimension(500,500));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
