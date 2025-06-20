@@ -16,6 +16,15 @@ public class MainFrame extends JFrame {
 
         MasterPanel masterPanel = new MasterPanel(donnees);
         add(masterPanel);
+
+        InsertPanel insertPanel = new InsertPanel(donnees);
+        add(insertPanel);
+
+        JTabbedPane onglets = new JTabbedPane();
+        onglets.add("Resultat",masterPanel);
+        onglets.add("Insertion",insertPanel);
+
+        add(onglets);
         setVisible(true);
 
     }

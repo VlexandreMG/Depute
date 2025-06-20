@@ -62,4 +62,17 @@ public class FiltrageComposant {
         return vector;
     }
 
+    public Vector<Resultat> VectorCandidats(Vector<Resultat> resultats) {
+        Vector<Resultat> vector = new Vector<>();
+        Vector<String> candidatDejaAjoutes = new Vector<>();
+
+        for (Resultat result : resultats) {
+            String candidat = result.getNomcandidat();
+            if (!candidatDejaAjoutes.contains(candidat)) {
+                vector.add(result);
+                candidatDejaAjoutes.add(candidat);
+            }
+        }
+        return vector;
+    }
 }
