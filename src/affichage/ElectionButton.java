@@ -9,6 +9,10 @@ import java.io.IOException;
 
 public class ElectionButton extends JButton {
      MasterPanel masterPanel;
+     FaritanyPanel faritanyPanel;
+     RegionPanel regionPanel;
+     DistrictPanel districtPanel;
+     BureauVotePanel bureauVotePanel;
      SpitString spitString = new SpitString();
 
     public ElectionButton(MasterPanel masterPanel) {
@@ -24,10 +28,10 @@ public class ElectionButton extends JButton {
             public void actionPerformed(ActionEvent e) {
                 try {
                     // Récupère les sélections des ComboBox
-                    String faritany = (String) masterPanel.getFaritanyCombo().getSelectedItem();
-                    String region = (String) masterPanel.getRegionCombo().getSelectedItem();
-                    String district = (String) masterPanel.getDistrictCombo().getSelectedItem();
-                    String bureau = (String) masterPanel.getBureauCombo().getSelectedItem();
+                    String faritany = faritanyPanel.getFaritanySelectionnee();
+                    String region = regionPanel.getRegionSelectionnee();
+                    String district = districtPanel.getDistrictSelectionne();
+                    String bureau = bureauVotePanel.getBureauSelectionne();
 
                     // Appel à gagnant() avec les sélections
                     String[][] resultats = spitString.gagnant(faritany, region, district, bureau);

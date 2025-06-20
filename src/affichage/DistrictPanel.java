@@ -19,9 +19,9 @@ public class DistrictPanel extends JComboBox<String> {
     private void remplirComboDistrict() {
         Vector<String> districtsUniques = new Vector<>();
         for (Resultat resultat : donnees) {
-            String nom = resultat.getDistrictVote();
-            if (!districtsUniques.contains(nom)) {
-                districtsUniques.add(nom);
+            String nomDistrict = resultat.getDistrictVote();
+            if (nomDistrict != null && !districtsUniques.contains(nomDistrict)) {
+                districtsUniques.add(nomDistrict);
             }
         }
         setModel(new DefaultComboBoxModel<>(districtsUniques));

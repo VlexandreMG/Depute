@@ -19,9 +19,9 @@ public class RegionPanel extends JComboBox<String> {
     private void remplirComboRegion() {
         Vector<String> regionsUniques = new Vector<>();
         for (Resultat resultat : donnees) {
-            String nom = resultat.getRegionVote();
-            if (!regionsUniques.contains(nom)) {
-                regionsUniques.add(nom);
+            String nomRegion = resultat.getRegionVote();
+            if (nomRegion != null && !regionsUniques.contains(nomRegion)) {
+                regionsUniques.add(nomRegion);
             }
         }
         setModel(new DefaultComboBoxModel<>(regionsUniques));

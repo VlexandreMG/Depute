@@ -1,51 +1,40 @@
 package fonction;
 
+import geographie.District;
 import politicien.Resultat;
 
 import java.util.Vector;
 
 public class FiltrageComposant {
 
-    public Vector<Resultat> VectorFaritany(Vector<Resultat> resultats) {
-        Vector<Resultat> vector = new Vector<>();
-        Vector<String> faritanyDejaAjoutees = new Vector<>(); // Pour éviter les doublons
-
-        for (Resultat result : resultats) {
-            String nomFaritany = result.getFaritanyVote();
-            if (!faritanyDejaAjoutees.contains(nomFaritany)) {
-                vector.add(result); // Ajoute le premier résultat trouvé pour cette Faritany
-                faritanyDejaAjoutees.add(nomFaritany);
+    public Vector<String> getRegionsFromFaritany(Vector<Resultat> resultats, String nomFaritany) {
+        Vector<String> regions = new Vector<>();
+        for (Resultat r : resultats) {
+            if (r.getFaritanyVote().equals(nomFaritany) && !regions.contains(r.getRegionVote())) {
+                regions.add(r.getRegionVote());
             }
         }
-        return vector;
+        return regions;
     }
 
-    public Vector<Resultat> VectorRegion(Vector<Resultat> resultats) {
-        Vector<Resultat> vector = new Vector<>();
-        Vector<String> regionsDejaAjoutees = new Vector<>();
-
-        for (Resultat result : resultats) {
-            String nomRegion = result.getRegionVote();
-            if (!regionsDejaAjoutees.contains(nomRegion)) {
-                vector.add(result); // Ajoute un résultat par région unique
-                regionsDejaAjoutees.add(nomRegion);
+    public Vector<String> getDistrictFromRegion(Vector<Resultat> resultats, String nomDistrict) {
+        Vector<String> district = new Vector<>();
+        for (Resultat r : resultats) {
+            if (r.getRegionVote().equals(nomDistrict) && !district.contains(r.getDistrictVote())) {
+                district.add(r.getDistrictVote());
             }
         }
-        return vector;
+        return district;
     }
 
-    public Vector<Resultat> VectorDistrict(Vector<Resultat> resultats) {
-        Vector<Resultat> vector = new Vector<>();
-        Vector<String> districtsDejaAjoutes = new Vector<>();
-
-        for (Resultat result : resultats) {
-            String nomDistrict = result.getDistrictVote();
-            if (!districtsDejaAjoutes.contains(nomDistrict)) {
-                vector.add(result);
-                districtsDejaAjoutes.add(nomDistrict);
+    public Vector<String> getBureauFromDistrict(Vector<Resultat> resultats, String nomBureau) {
+        Vector<String> bureau = new Vector<>();
+        for (Resultat r : resultats) {
+            if (r.getDistrictVote().equals(nomBureau) && !bureau.contains(r.getBureauVote())) {
+                bureau.add(r.getBureauVote());
             }
         }
-        return vector;
+        return bureau;
     }
 
     public Vector<Resultat> VectorBureau(Vector<Resultat> resultats) {

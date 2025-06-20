@@ -26,7 +26,7 @@ public class Main {
 
         //Vector<Resultat> resultatVec = filtrageComposant.VectorRegion(valiny);
         //for (Resultat resultat : resultatVec) {
-            //System.out.println(resultat.getRegionVote());
+        //System.out.println(resultat.getRegionVote());
         //}
 
         //Vector<Resultat> resultatVect = filtrageComposant.VectorDistrict(valiny);

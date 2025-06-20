@@ -1,9 +1,12 @@
 package affichage;
 
 import fonction.FiltrageComposant;
+import geographie.BureauVote;
 import politicien.Resultat;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Vector;
 
 public class MasterPanel extends JPanel {
@@ -71,11 +74,14 @@ public class MasterPanel extends JPanel {
     }
 
     private void setupListeners() {
-        // Faritany -> Met à jour Région
         faritanyPanel.addActionListener(e -> {
-            if (faritanyPanel.getSelectedItem() != null) {
-                Vector<Resultat> filtres = filtre.VectorFaritany(donnees);
-                regionPanel.setModel(new DefaultComboBoxModel<>(getUniqueValues(filtres, true, false, false)));
+            String selectedFaritany = faritanyPanel.getFaritanySelectionnee();
+            if (selectedFaritany != null) {
+                // Utilisez directement vos Resultat existants
+                Vector<String> regions = filtre.getRegionsFromFaritany(donnees, selectedFaritany);
+                regionPanel.setModel(new DefaultComboBoxModel<>(regions));
+
+                // Réinitialisation des niveaux inférieurs
                 districtPanel.setModel(new DefaultComboBoxModel<>());
                 bureauPanel.setModel(new DefaultComboBoxModel<>());
             }
@@ -83,38 +89,23 @@ public class MasterPanel extends JPanel {
 
         // Région -> Met à jour District
         regionPanel.addActionListener(e -> {
-            if (regionPanel.getSelectedItem() != null) {
-                Vector<Resultat> filtres = filtre.VectorRegion(donnees);
-                districtPanel.setModel(new DefaultComboBoxModel<>(getUniqueValues(filtres, false, true, false)));
+            String selectedRegion = regionPanel.getRegionSelectionnee();
+            if (selectedRegion != null) {
+                Vector<String> district = filtre.getDistrictFromRegion(donnees, selectedRegion);
+                districtPanel.setModel(new DefaultComboBoxModel<>(district));
+
                 bureauPanel.setModel(new DefaultComboBoxModel<>());
+
             }
         });
 
         // District -> Met à jour Bureau
         districtPanel.addActionListener(e -> {
-            if (districtPanel.getSelectedItem() != null) {
-                Vector<Resultat> filtres = filtre.VectorDistrict(donnees);
-                bureauPanel.setModel(new DefaultComboBoxModel<>(getUniqueValues(filtres, false, false, true)));
+            String selectedDistrict = districtPanel.getDistrictSelectionne();
+            if (selectedDistrict != null) {
+                Vector<String> bureau = filtre.getBureauFromDistrict(donnees, selectedDistrict);
+                bureauPanel.setModel(new DefaultComboBoxModel<>(bureau));
             }
         });
     }
-
-    private Vector<String> getUniqueValues(Vector<Resultat> resultats, boolean isRegion, boolean isDistrict, boolean isBureau) {
-        Vector<String> values = new Vector<>();
-        for (Resultat r : resultats) {
-            String nom = isRegion ? r.getRegionVote() :
-                    isDistrict ? r.getDistrictVote() :
-                            r.getBureauVote();
-            if (!values.contains(nom)) {
-                values.add(nom);
-            }
-        }
-        return values;
-    }
-
-    // Getters modifiés
-    public JComboBox<String> getFaritanyCombo() { return faritanyPanel; }
-    public JComboBox<String> getRegionCombo() { return regionPanel; }
-    public JComboBox<String> getDistrictCombo() { return districtPanel; }
-    public JComboBox<String> getBureauCombo() { return bureauPanel; }
 }
